@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import mapzen.pelias
-import mapzen.geojson.markdown
 import logging
 import optparse
 import sys
@@ -34,5 +33,7 @@ if __name__ == '__main__':
     api = mapzen.pelias.api()
     rsp = api.execute_method(method, params, raw=options.raw)
 
-    mapzen.geojson.markdown.convert(rsp)
+    f = mapzen.pelias.formatter(rsp)
+    f.markdown()
+
     sys.exit()

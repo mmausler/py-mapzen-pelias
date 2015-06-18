@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import sys
 import requests
 import geojson
 import logging
@@ -18,6 +19,7 @@ class api:
         method = method.lstrip('/')
         url = "https://" + self.host + method
 
+        print params
         rsp = requests.get(url, params=params)
 
         if more.get('raw', False):
@@ -26,12 +28,43 @@ class api:
         data = geojson.loads(rsp.content)
         return data
 
+class formatter:
+
+    def __init__(self, data):
+
+        self.data = data
+
+    def markdown(self, fh=sys.stdout):
+
+        fh.write("## Bounding box\n\n")
+        fh.write("%s\n\n" % self.data['bbox'])
+
+        fh.write("## Features\n\n")
+
+        for f in self.data['features']:
+        
+            props = f.get('properties', {})
+    
+            fh.write("### %s\n\n" % f['type'])
+
+            fh.write("#### Geometry\n\n")
+            fh.write("%s\n\n" % f['geometry'])        
+            
+            fh.write("#### Properties\n\n")
+            
+            for k,v in props.items():
+                fh.write("* `%s` %s\n" %(k, v))
+                
+            fh.write("\n")
+
+
 if __name__ == '__main__':
 
     method = 'search'
-    params = {input:'montreal'}
-
+    params = {'input':'montreal'}
+    
     a = api()
     rsp = a.execute_method(method, params)
 
-    print rsp
+    f = formatter(rsp)
+    f.markdown()
