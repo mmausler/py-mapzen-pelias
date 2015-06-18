@@ -1,0 +1,38 @@
+#!/usr/bin/env python
+
+import mapzen.pelias
+import mapzen.geojson.markdown
+import logging
+import optparse
+import sys
+import pprint
+
+if __name__ == '__main__':
+
+    parser = optparse.OptionParser()
+
+    parser.add_option('-c', '--coarse', dest='coarse', action='store_true', default=False, help='Perform a coarse query (default is false)')
+    parser.add_option('-r', '--raw', dest='raw', action='store_true', default=False, help='Return raw unparse GeoJSON (default is false)')
+    parser.add_option('-v', '--verbose', dest='verbose', action='store_true', default=False, help='be chatty (default is false)')
+
+    options, args = parser.parse_args()
+
+    if options.verbose:	
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.INFO)
+	
+    method = 'search'
+    
+    if options.coarse:
+        method = 'search/coarse'
+
+    query = " ".join(args)
+
+    params = {'input': query}
+
+    api = mapzen.pelias.api()
+    rsp = api.execute_method(method, params, raw=options.raw)
+
+    mapzen.geojson.markdown.convert(rsp)
+    sys.exit()
