@@ -25,6 +25,7 @@ class api:
         if more.get('raw', False):
             return rsp.content
 
+        print(type(rsp.content))
         data = geojson.loads(rsp.content)
         return data
 
