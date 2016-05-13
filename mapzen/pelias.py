@@ -26,7 +26,7 @@ class api:
             return rsp.content
 
         print(type(rsp.content))
-        data = geojson.loads(rsp.content)
+        data = geojson.loads(json.dumps(rsp.content))
         return data
 
 class formatter:
