@@ -19,7 +19,7 @@ class api:
         method = method.lstrip('/')
         url = "https://" + self.host + method
 
-        print params
+        print(params)
         rsp = requests.get(url, params=params)
 
         if more.get('raw', False):
@@ -42,7 +42,7 @@ class formatter:
         fh.write("## Features\n\n")
 
         for f in self.data['features']:
-        
+
             props = f.get('properties', {})
     
             fh.write("### %s\n\n" % f['type'])
@@ -54,7 +54,7 @@ class formatter:
             
             for k,v in props.items():
                 fh.write("* `%s` %s\n" %(k, v))
-                
+
             fh.write("\n")
 
 
@@ -62,7 +62,7 @@ if __name__ == '__main__':
 
     method = 'search'
     params = {'input':'montreal'}
-    
+
     a = api()
     rsp = a.execute_method(method, params)
 

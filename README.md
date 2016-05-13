@@ -16,8 +16,8 @@ Simple Python wrapper for the Mapzen Pelias API
 
 	rsp = api.execute_method(method, params)
 
-	print type(rsp)
-	<class 'geojson.feature.FeatureCollection'>	
+	print(type(rsp))
+	<class 'geojson.feature.FeatureCollection'>
 
 ### Reverse-geocoding
 
@@ -29,8 +29,8 @@ Simple Python wrapper for the Mapzen Pelias API
 
 	rsp = api.execute_method(method, params)
 
-	print type(rsp)
-	<class 'geojson.feature.FeatureCollection'>	
+	print(type(rsp))
+	<class 'geojson.feature.FeatureCollection'>
 
 ### Less simple
 
