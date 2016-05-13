@@ -4,6 +4,7 @@ import sys
 import requests
 import geojson
 import logging
+import json
 
 # http://pelias.mapzen.com/
 
